@@ -1,0 +1,5 @@
+# Allow search engine crawlers to index the public portfolio
+User-agent: *
+Allow: /
+
+Sitemap: https://paes18.dev/sitemap.xml
