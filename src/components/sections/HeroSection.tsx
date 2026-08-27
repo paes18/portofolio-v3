@@ -6,8 +6,10 @@ import { Container } from '../layout/Container';
 import { HeroScene } from '../3d/HeroScene';
 import { useCursor } from '../../hooks/useCursor';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const HeroSection: React.FC = () => {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [pointer, setPointer] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [is3DHovered, setIs3DHovered] = useState<boolean>(false);
@@ -23,40 +25,44 @@ export const HeroSection: React.FC = () => {
   const typographyY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
   const typographyOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
   const sceneY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-  const sceneScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-
-  // Smooth Pointer Tracking for 3D Reaction
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    if (shouldReduceMotion) return;
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    // Normalize coordinates to [-1, 1]
-    const normX = (clientX / innerWidth) * 2 - 1;
-    const normY = -(clientY / innerHeight) * 2 + 1;
-    setPointer({ x: normX, y: normY });
-  }, [shouldReduceMotion]);
-
-  const handleMouseLeave = useCallback(() => {
-    setPointer({ x: 0, y: 0 });
-    setIs3DHovered(false);
-  }, []);
+  const sceneScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   const scrollToProjects = () => {
     const el = document.getElementById('projects');
-    el?.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.hash = 'projects';
+    }
   };
 
   const scrollToAbout = () => {
     const el = document.getElementById('about');
-    el?.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.hash = 'about';
+    }
   };
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (shouldReduceMotion) return;
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+      const x = (clientX / innerWidth) * 2 - 1;
+      const y = -(clientY / innerHeight) * 2 + 1;
+      setPointer({ x, y });
+    },
+    [shouldReduceMotion]
+  );
 
   return (
     <section
       ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex flex-col justify-between pt-28 pb-12 overflow-hidden select-none"
+      id="hero"
+      onPointerMove={handlePointerMove}
+      className="relative min-h-[90vh] lg:min-h-screen flex flex-col justify-between pt-28 pb-12 lg:py-0 overflow-hidden bg-slate-950 z-10"
     >
       {/* Background Radial Atmosphere behind 3D Object */}
       <div
@@ -64,8 +70,9 @@ export const HeroSection: React.FC = () => {
         aria-hidden="true"
       />
 
+      {/* Structural Layout Container */}
       <Container size="wide" className="relative z-10 my-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[70vh]">
           
           {/* =================================================================
               LEFT / UPPER AREA: IDENTITY & DOMINANT EDITORIAL TYPOGRAPHY
@@ -83,24 +90,28 @@ export const HeroSection: React.FC = () => {
                 <span className="text-sky-400 font-bold">PAES18</span>
               </div>
               <span className="px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 font-mono text-[11px] font-bold">
-                ⚡ 19 Y.O. // GEN Z CREATIVE DEV
+                ⚡ 19 Y.O. // {language === 'ID' ? 'PENGEMBANG WEB KREATIF' : 'GEN Z CREATIVE DEV'}
               </span>
             </div>
 
             {/* Dominant Headline: HEY, I'M FAIZ. */}
             <div className="w-full flex flex-col">
               <span className="text-body-lg sm:text-h3 font-display font-medium text-text-secondary tracking-tight">
-                HEY,
+                {language === 'ID' ? 'HALO,' : 'HEY,'}
               </span>
               <h1 className="text-[clamp(3rem,6vw+1rem,5.5rem)] font-display font-black text-white tracking-tighter leading-[0.95] uppercase">
-                <span className="text-text-muted/80 font-light block sm:inline">I'M </span>
+                <span className="text-text-muted/80 font-light block sm:inline">
+                  {language === 'ID' ? 'SAYA ' : "I'M "}
+                </span>
                 <span className="text-gradient-accent drop-shadow-sm">FAIZ.</span>
               </h1>
             </div>
 
             {/* Supporting Statement (Concise, Confident) */}
             <p className="text-body-lg sm:text-h4 text-text-secondary max-w-xl font-normal leading-relaxed">
-              “I build things that start as an idea and end up working.”
+              {language === 'ID'
+                ? '“Saya membangun sesuatu yang bermula dari ide dan berakhir bekerja dengan baik.”'
+                : '“I build things that start as an idea and end up working.”'}
             </p>
 
             {/* Micro Coordinate / Status Detail */}
@@ -115,7 +126,9 @@ export const HeroSection: React.FC = () => {
                 <span>JAKARTA, ID</span>
               </div>
               <span className="text-slate-700">•</span>
-              <span className="text-emerald-400/90 font-medium">● CURRENTLY BUILDING</span>
+              <span className="text-emerald-400/90 font-medium">
+                ● {language === 'ID' ? 'SEDANG MEMBANGUN' : 'CURRENTLY BUILDING'}
+              </span>
             </div>
 
             {/* Primary Action Buttons */}
@@ -126,7 +139,7 @@ export const HeroSection: React.FC = () => {
                 onClick={scrollToProjects}
                 icon={<Sparkles className="w-4 h-4" />}
               >
-                Explore Selected Work
+                {language === 'ID' ? 'Lihat Hasil Karya' : 'Explore Selected Work'}
               </Button>
               <Button
                 variant="secondary"
@@ -134,7 +147,7 @@ export const HeroSection: React.FC = () => {
                 onClick={scrollToAbout}
                 icon={<ArrowDown className="w-4 h-4" />}
               >
-                About Faiz
+                {language === 'ID' ? 'Tentang Faiz' : 'About Faiz'}
               </Button>
             </div>
           </motion.div>

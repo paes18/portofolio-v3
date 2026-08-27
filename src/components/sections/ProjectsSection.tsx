@@ -5,10 +5,12 @@ import { projectsData } from '../../data/projects';
 import { Container } from '../layout/Container';
 import { ScrollReveal } from '../motion/ScrollReveal';
 import { useCursor } from '../../hooks/useCursor';
+import { useLanguage } from '../../context/LanguageContext';
 import { ProjectVisual } from './projects/ProjectVisual';
 import { CaseStudyView } from './projects/CaseStudyView';
 
 export const ProjectsSection: React.FC = () => {
+  const { language } = useLanguage();
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const { bindCursorEvents } = useCursor('project', 'VIEW');
@@ -75,16 +77,21 @@ export const ProjectsSection: React.FC = () => {
                 // 01
               </span>
               <span className="text-caption font-mono tracking-widest uppercase text-text-muted">
-                SELECTED WORKS // PROJECT UNIVERSE
+                {language === 'ID' ? 'HASIL KARYA // KATALOG PROJECT' : 'SELECTED WORKS // PROJECT UNIVERSE'}
               </span>
             </div>
 
             <h2 className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-display font-black text-white tracking-tighter leading-none uppercase">
-              SELECTED <span className="text-gradient-accent">WORKS.</span>
+              {language === 'ID' ? 'HASIL ' : 'SELECTED '}
+              <span className="text-gradient-accent">
+                {language === 'ID' ? 'KARYA.' : 'WORKS.'}
+              </span>
             </h2>
 
             <p className="text-body-lg text-text-secondary max-w-2xl font-normal leading-relaxed">
-              “Things I've built while figuring things out.” Real artifacts across web applications, creative technology, and management systems.
+              {language === 'ID'
+                ? '“Hasil karya asli yang dibangun untuk aplikasi web, teknologi kreatif, dan sistem manajemen.”'
+                : '“Things I\'ve built while figuring things out.” Real artifacts across web applications, creative technology, and management systems.'}
             </p>
           </ScrollReveal>
 
@@ -92,11 +99,11 @@ export const ProjectsSection: React.FC = () => {
           <ScrollReveal delay={0.15} className="flex items-center gap-2 flex-wrap font-mono text-xs p-1.5 rounded-2xl bg-slate-900/90 border border-white/10">
             <div className="flex items-center gap-1.5 px-3 py-1 text-text-muted text-[11px] hidden sm:flex">
               <Filter className="w-3.5 h-3.5" />
-              <span>FILTER:</span>
+              <span>{language === 'ID' ? 'FILTER:' : 'FILTER:'}</span>
             </div>
             {[
-              { id: 'all', label: 'ALL (7)' },
-              { id: 'featured', label: 'FEATURED (3)' },
+              { id: 'all', label: language === 'ID' ? 'SEMUA (7)' : 'ALL (7)' },
+              { id: 'featured', label: language === 'ID' ? 'UNGGULAN (3)' : 'FEATURED (3)' },
               { id: 'system', label: 'SYSTEM' },
               { id: 'creative', label: 'CREATIVE' },
               { id: 'web-app', label: 'WEB APP' },

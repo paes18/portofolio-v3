@@ -7,6 +7,7 @@ import { Container } from './Container';
 import { useCursor } from '../../hooks/useCursor';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface NavItem {
   id: string;
@@ -25,6 +26,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 export const Header: React.FC = () => {
+  const { language, setLanguage } = useLanguage();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const { bindCursorEvents } = useCursor('link');
@@ -152,11 +154,37 @@ export const Header: React.FC = () => {
             })}
           </nav>
 
-          {/* Availability Status & Fast Contact CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Language Switcher Pill Toggle & Fast Contact CTA */}
+          <div className="flex items-center gap-3">
+            {/* Language Switcher Pill */}
+            <div className="inline-flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10 font-mono text-[11px] select-none">
+              <button
+                onClick={() => setLanguage('EN')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                  language === 'EN'
+                    ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-text-muted hover:text-white'
+                }`}
+                title="Switch to English"
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage('ID')}
+                className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                  language === 'ID'
+                    ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
+                    : 'text-text-muted hover:text-white'
+                }`}
+                title="Ubah ke Bahasa Indonesia"
+              >
+                ID
+              </button>
+            </div>
+
             <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono select-none">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>AVAILABLE TO BUILD</span>
+              <span>{language === 'ID' ? 'SIAP BEKERJA' : 'AVAILABLE TO BUILD'}</span>
             </div>
 
             <Button
@@ -167,9 +195,9 @@ export const Header: React.FC = () => {
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
               icon={<ArrowUpRight className="w-3.5 h-3.5" />}
-              className="text-xs font-mono"
+              className="text-xs font-mono hidden sm:inline-flex"
             >
-              Get In Touch
+              {language === 'ID' ? 'Hubungi Saya' : 'Get In Touch'}
             </Button>
           </div>
 

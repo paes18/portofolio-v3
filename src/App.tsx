@@ -1,4 +1,5 @@
 import { CursorProvider } from './context/CursorContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { SkipToContent } from './components/layout/SkipToContent';
 import { AmbientBackground } from './components/layout/AmbientBackground';
 import { Header } from './components/layout/Header';
@@ -20,7 +21,8 @@ export function App() {
   const easterEggs = useEasterEggs();
 
   return (
-    <CursorProvider>
+    <LanguageProvider>
+      <CursorProvider>
       {/* Accessibility Skip Link */}
       <SkipToContent />
 
@@ -55,6 +57,7 @@ export function App() {
         <Footer onFooterClick={easterEggs.handleFooterClick} />
       </div>
     </CursorProvider>
+  </LanguageProvider>
   );
 }
 

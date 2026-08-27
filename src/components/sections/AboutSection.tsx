@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Terminal, Compass, Flame } from 'lucide-react';
 import { siteData } from '../../data/site';
 import { Container } from '../layout/Container';
 import { ScrollReveal } from '../motion/ScrollReveal';
+import { useLanguage } from '../../context/LanguageContext';
 import { IdentityCard } from './about/IdentityCard';
 import { DualitySection } from './about/DualitySection';
 import { CurrentlyFeed } from './about/CurrentlyFeed';
@@ -11,6 +12,8 @@ import { PhilosophyLoop } from './about/PhilosophyLoop';
 import { LeadershipTeaser } from './about/LeadershipTeaser';
 
 export const AboutSection: React.FC = () => {
+  const { language } = useLanguage();
+
   return (
     <section
       id="about"
@@ -38,17 +41,22 @@ export const AboutSection: React.FC = () => {
               // 02
             </span>
             <span className="text-caption font-mono tracking-widest uppercase text-text-muted">
-              ABOUT // WHO TF IS PAES?
+              {language === 'ID' ? 'TENTANG // SIAPA ITU PAES?' : 'ABOUT // WHO TF IS PAES?'}
             </span>
           </div>
 
           {/* Headline */}
           <h2 className="text-[clamp(2.75rem,6vw,5.5rem)] font-display font-black text-white tracking-tighter leading-[0.95] uppercase">
-            SO... <span className="text-gradient-accent">WHO TF IS PAES?</span>
+            {language === 'ID' ? 'TENTANG ' : 'WHO TF IS '}
+            <span className="text-gradient-accent">
+              {language === 'ID' ? 'PAES?' : 'PAES?'}
+            </span>
           </h2>
 
           <p className="text-body-lg sm:text-h4 text-text-secondary max-w-3xl font-normal leading-relaxed">
-            The person behind the screen—turning raw ideas into working digital realities.
+            {language === 'ID'
+              ? 'Seseorang di balik layar—mengubah ide menjadi kenyataan digital yang bekerja dengan baik.'
+              : 'The person behind the screen—turning raw ideas into working digital realities.'}
           </p>
         </ScrollReveal>
 
@@ -61,7 +69,15 @@ export const AboutSection: React.FC = () => {
             {/* First-Person Bio Paragraph */}
             <div className="flex flex-col gap-5 text-body-lg text-text-secondary leading-relaxed">
               <p>
-                Gue <span className="text-white font-semibold">Faiz</span> (known online as <span className="text-sky-400 font-mono font-semibold">PAES</span>). A 19-year-old developer based in Indonesia who loves taking raw ideas and turning them into real, interactive digital products.
+                {language === 'ID' ? (
+                  <>
+                    Saya <span className="text-white font-semibold">Faiz</span> (dikenal secara online sebagai <span className="text-sky-400 font-mono font-semibold">PAES</span>). Pengembang web berusia 19 tahun asal Indonesia yang suka mengubah konsep ide menjadi produk digital yang interaktif dan responsif.
+                  </>
+                ) : (
+                  <>
+                    I'm <span className="text-white font-semibold">Faiz</span> (known online as <span className="text-sky-400 font-mono font-semibold">PAES</span>). A 19-year-old developer based in Indonesia who loves taking raw ideas and turning them into real, interactive digital products.
+                  </>
+                )}
               </p>
               <p className="text-base text-text-muted">
                 I enjoy <span className="text-slate-200 font-medium">coding, technology, visual design, AI experimentation, building projects,</span> and <span className="text-slate-200 font-medium">solving complex problems</span>. For me, nothing beats that exact moment when an idea evolves into a working prototype, and finally becomes a product people actually use.
