@@ -92,7 +92,7 @@ export const CaseStudyView: React.FC<CaseStudyViewProps> = ({ project, onClose, 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col overflow-hidden"
+        className="fixed inset-0 z-[100] bg-slate-950 text-slate-100 flex flex-col overflow-hidden"
       >
         {/* Top Reading Progress Bar */}
         <div className="w-full h-1 bg-slate-900 z-50">
@@ -103,7 +103,7 @@ export const CaseStudyView: React.FC<CaseStudyViewProps> = ({ project, onClose, 
         </div>
 
         {/* Top Sticky Navigation Bar */}
-        <header className="w-full py-4 px-6 sm:px-10 bg-slate-950/90 border-b border-white/10 backdrop-blur-md flex items-center justify-between gap-4 z-40">
+        <header className="w-full py-4 px-6 sm:px-10 bg-slate-950/95 border-b border-white/10 backdrop-blur-md flex items-center justify-between gap-4 z-40">
           <button
             onClick={onClose}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-sky-400 text-xs font-mono text-text-secondary hover:text-white transition-all cursor-pointer"
@@ -118,35 +118,34 @@ export const CaseStudyView: React.FC<CaseStudyViewProps> = ({ project, onClose, 
             </span>
             <span className="hidden sm:inline text-white font-semibold">{project.title}</span>
             <span className="text-slate-700 hidden sm:inline">•</span>
-            <span className="text-emerald-400 text-[11px] font-semibold flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              {project.status.toUpperCase()}
+            <span className="px-2 py-0.5 rounded bg-slate-900 border border-white/10 text-emerald-400 font-bold uppercase text-[10px]">
+              {project.status}
             </span>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-slate-900 border border-white/10 hover:border-sky-400 text-text-muted hover:text-white transition-colors cursor-pointer"
-            aria-label="Close Case Study"
+            className="p-2 rounded-xl bg-slate-900 border border-white/10 hover:border-rose-400 text-text-muted hover:text-rose-400 transition-all cursor-pointer"
+            title="Close Case Study (Esc)"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </header>
 
-        {/* Main Content Area with Side Nav */}
-        <div className="flex-1 flex overflow-hidden relative">
-          {/* Desktop Sticky Side Navigation */}
-          <aside className="hidden lg:flex flex-col justify-between w-64 p-8 border-r border-white/10 bg-slate-950/60 font-mono text-xs flex-shrink-0">
+        {/* Main Content Body (Sidebar + Scroll Area) */}
+        <div className="flex-1 flex overflow-hidden relative z-10">
+          {/* Left Sticky Navigation Drawer */}
+          <aside className="w-64 border-r border-white/10 bg-slate-950 p-6 hidden lg:flex flex-col justify-between shrink-0">
             <div className="flex flex-col gap-6">
-              <span className="text-[10px] text-text-muted uppercase tracking-widest block font-semibold">
+              <span className="text-[10px] font-mono text-text-muted uppercase tracking-widest block font-bold">
                 // CASE STUDY SECTIONS
               </span>
-              <nav className="flex flex-col gap-2">
+              <nav className="flex flex-col gap-1 font-mono text-xs">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`text-left px-3 py-2 rounded-lg transition-all cursor-pointer ${
+                    className={`text-left py-2 px-3 rounded-lg transition-all cursor-pointer ${
                       activeSection === item.id
                         ? 'bg-sky-500/10 text-sky-300 border border-sky-500/30 font-bold pl-4'
                         : 'text-text-muted hover:text-white hover:bg-slate-900'
@@ -168,7 +167,7 @@ export const CaseStudyView: React.FC<CaseStudyViewProps> = ({ project, onClose, 
           {/* Main Scrollable Case Study Body */}
           <div
             id="case-study-scroll-container"
-            className="flex-1 overflow-y-auto px-5 sm:px-10 lg:px-16 py-10 flex flex-col gap-20 sm:gap-28 scroll-smooth"
+            className="flex-1 overflow-y-auto px-5 sm:px-10 lg:px-16 py-10 pb-36 flex flex-col gap-20 sm:gap-28 scroll-smooth"
           >
             <div className="max-w-4xl mx-auto w-full flex flex-col gap-20 sm:gap-28">
 

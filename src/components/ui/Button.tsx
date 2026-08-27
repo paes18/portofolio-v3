@@ -28,13 +28,13 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variantStyles: Record<ButtonVariant, string> = {
     primary:
-      'bg-accent-primary text-slate-950 font-semibold hover:bg-accent-primary-hover shadow-sm border border-transparent',
+      'bg-sky-400 text-slate-950 font-bold hover:bg-sky-300 shadow-md shadow-sky-500/20 border border-sky-400',
     secondary:
-      'bg-surface-hover text-text-primary hover:bg-surface border border-border-subtle hover:border-border-medium',
+      'bg-slate-900 text-white hover:bg-slate-800 border border-white/10 hover:border-white/20',
     outline:
-      'bg-transparent text-text-primary border border-border-medium hover:border-accent-primary hover:text-accent-primary',
+      'bg-slate-950/80 text-white border border-sky-500/40 hover:border-sky-400 hover:text-sky-400 hover:bg-sky-500/10',
     text:
-      'bg-transparent text-text-secondary hover:text-text-primary p-0 border-none hover:underline',
+      'bg-transparent text-text-secondary hover:text-sky-400 p-0 border-none hover:underline',
   };
 
   const sizeStyles: Record<ButtonSize, string> = {

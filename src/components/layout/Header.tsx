@@ -123,7 +123,7 @@ export const Header: React.FC = () => {
 
           {/* Desktop Navigation Links with Active Indicator */}
           <nav
-            className="hidden md:flex items-center gap-7 lg:gap-8"
+            className="hidden md:flex items-center gap-4 sm:gap-5 lg:gap-7"
             aria-label="Main Navigation"
           >
             {NAV_ITEMS.map((item) => {
@@ -153,8 +153,8 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Availability Status & Fast Contact CTA */}
-          <div className="hidden lg:flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono select-none">
+          <div className="hidden md:flex items-center gap-3">
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-mono select-none">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>AVAILABLE TO BUILD</span>
             </div>

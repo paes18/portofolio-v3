@@ -92,7 +92,7 @@ export const HeroSection: React.FC = () => {
               <span className="text-body-lg sm:text-h3 font-display font-medium text-text-secondary tracking-tight">
                 HEY,
               </span>
-              <h1 className="text-[clamp(3.75rem,8.5vw+1rem,7.5rem)] font-display font-black text-white tracking-tighter leading-[0.92] uppercase">
+              <h1 className="text-[clamp(3rem,6vw+1rem,5.5rem)] font-display font-black text-white tracking-tighter leading-[0.95] uppercase">
                 <span className="text-text-muted/80 font-light block sm:inline">I'M </span>
                 <span className="text-gradient-accent drop-shadow-sm">FAIZ.</span>
               </h1>
